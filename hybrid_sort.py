@@ -52,3 +52,19 @@ def hybrid_merge_insertion_sort(arr, s):
     hybrid(arr, 0, len(arr) - 1, s)
     return arr
 
+#complexity writeup
+'''
+Insertion sort time complexity: it happens on n/s arrays of size s. Worst case complexity is O(s^2) for each.
+So, time complexity for insertion sort part: O((n/s) * s^2) = O(ns) = O(n).
+
+Merge sort time complexity: recursion depth = log(n/s), time complexity of merge = O(n).
+So time complexity for merge sort part = O(nlog(n/s)) = O(nlogn)
+
+Hybrid time complexity: O(nlog(n/s) + ns) = O(nlogn)
+
+Smaller s => merge dominates
+Larger s => insertion sort comparisons/swaps dominate
+
+Space complexity = O(n)
+
+'''
