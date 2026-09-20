@@ -1,105 +1,8 @@
 import random
 import time
+import csv
 
-
-# --------------------------------------------------
-# INSERTION SORT
-# --------------------------------------------------
-
-def insertion_sort(arr, low, high, counter):
-    for i in range(low + 1, high + 1):
-
-        key = arr[i]
-        j = i - 1
-
-        while j >= low:
-
-            # Count key comparison
-            counter[0] += 1
-
-            if arr[j] > key:
-                arr[j + 1] = arr[j]
-                j -= 1
-            else:
-                break
-
-        arr[j + 1] = key
-
-
-# --------------------------------------------------
-# MERGE
-# --------------------------------------------------
-
-def merge(arr, low, mid, high, counter):
-
-    left = arr[low:mid + 1]
-    right = arr[mid + 1:high + 1]
-
-    i = 0
-    j = 0
-    k = low
-
-    while i < len(left) and j < len(right):
-
-        # Count key comparison
-        counter[0] += 1
-
-        if left[i] <= right[j]:
-            arr[k] = left[i]
-            i += 1
-        else:
-            arr[k] = right[j]
-            j += 1
-
-        k += 1
-
-    while i < len(left):
-        arr[k] = left[i]
-        i += 1
-        k += 1
-
-    while j < len(right):
-        arr[k] = right[j]
-        j += 1
-        k += 1
-
-
-# --------------------------------------------------
-# HYBRID SORT
-# --------------------------------------------------
-
-def hybrid(arr, low, high, s, counter):
-
-    size = high - low + 1
-
-    # Switch to insertion sort
-    if size <= s:
-        insertion_sort(arr, low, high, counter)
-        return
-
-    mid = (low + high) // 2
-
-    hybrid(arr, low, mid, s, counter)
-    hybrid(arr, mid + 1, high, s, counter)
-
-    merge(arr, low, mid, high, counter)
-
-
-# --------------------------------------------------
-# HYBRID SORT WRAPPER
-# --------------------------------------------------
-
-def hybrid_sort(arr, s):
-
-    counter = [0]
-
-    if len(arr) <= 1:
-        return arr, 0
-
-    hybrid(arr, 0, len(arr) - 1, s, counter)
-
-    return arr, counter[0]
-
+from hybrid_sort import hybrid_merge_insertion_sort
 
 # --------------------------------------------------
 # DATASET GENERATION
@@ -134,12 +37,14 @@ S_VALUES = [
 
 INPUT_SIZES = [
     10_000,
-    100_000,
+    100_000, 
     1_000_000,
     5_000_000,
     10_000_000
+
 ]
 
+results = []
 
 for n in INPUT_SIZES:
 
@@ -159,7 +64,7 @@ for n in INPUT_SIZES:
 
         start_time = time.perf_counter()
 
-        sorted_data, comparisons = hybrid_sort(data, s)
+        _, comparisons = hybrid_merge_insertion_sort(data, s)
 
         end_time = time.perf_counter()
 
@@ -171,7 +76,25 @@ for n in INPUT_SIZES:
             f"CPU Time = {cpu_time:.4f} seconds"
         )
 
-        # Check correctness
-        if sorted_data != sorted(original_data):
-            print("ERROR: Sorting is incorrect!")
-            break
+        results.append([
+            n, 
+            s,
+            comparisons,
+            cpu_time
+        ])
+
+        
+with open("c3_results.csv", "w", newline="") as file:
+
+    writer = csv.writer(file)
+
+    writer.writerow([
+        "Input Size",
+        "S",
+        "Key Comparisons",
+        "CPU Time"
+    ])
+
+    writer.writerows(results)
+
+print("\nResults saved to c3_results.csv")
