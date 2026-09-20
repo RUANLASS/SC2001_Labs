@@ -1,3 +1,3 @@
-Algorithm,Input Size,S,Key Comparisons,CPU Time
-Original Merge Sort,10000000,N/A,220099725,51.984375
-Hybrid Merge+Insertion Sort,10000000,5,221108960,51.921875
+Algorithm,Input Size,S,Key Comparisons,Average CPU Time
+Original Merge Sort,10000000,N/A,220099725,74.03645833333333
+Hybrid Merge+Insertion Sort,10000000,15,226417560,42.6875

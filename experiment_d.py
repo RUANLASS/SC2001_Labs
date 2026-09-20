@@ -22,8 +22,9 @@ from generate_data import generate_dataset
 # --------------------------------------------------
 
 N = 10_000_000
-S_OPTIMAL = 5
+S_OPTIMAL = 15
 SEED = 42
+REPEATS = 3
 
 
 # --------------------------------------------------
@@ -121,20 +122,27 @@ original_data = generate_dataset(N, seed=SEED)
 
 print("Running original Merge Sort...")
 
-merge_data = original_data.copy()
+merge_times = []
+merge_comparisons = None
 
-start_time = time.process_time()
+for run in range(REPEATS):
+    merge_data = original_data.copy()
 
-sorted_merge, merge_comparisons = original_merge_sort(merge_data)
+    start_time = time.process_time()
+    _, current_comparisons = original_merge_sort(merge_data)
+    end_time = time.process_time()
 
-end_time = time.process_time()
+    merge_times.append(end_time - start_time)
 
-merge_cpu_time = end_time - start_time
+    if merge_comparisons is None:
+        merge_comparisons = current_comparisons
+
+merge_average_time = sum(merge_times) / REPEATS
 
 print(
     f"Original Merge Sort | "
     f"Comparisons = {merge_comparisons:,} | "
-    f"CPU Time = {merge_cpu_time:.6f} seconds"
+    f"Average CPU Time = {merge_average_time:.6f} seconds"
 )
 
 
@@ -144,23 +152,29 @@ print(
 
 print("Running Hybrid Merge+Insertion Sort...")
 
-hybrid_data = original_data.copy()
+hybrid_times = []
+hybrid_comparisons = None
 
-start_time = time.process_time()
+for run in range(REPEATS):
+    hybrid_data = original_data.copy()
 
-sorted_hybrid, hybrid_comparisons = hybrid_merge_insertion_sort(
-    hybrid_data,
-    S_OPTIMAL
-)
+    start_time = time.process_time()
+    _, current_comparisons = hybrid_merge_insertion_sort(
+        hybrid_data, S_OPTIMAL
+    )
+    end_time = time.process_time()
 
-end_time = time.process_time()
+    hybrid_times.append(end_time - start_time)
 
-hybrid_cpu_time = end_time - start_time
+    if hybrid_comparisons is None:
+        hybrid_comparisons = current_comparisons
+
+hybrid_average_time = sum(hybrid_times) / REPEATS
 
 print(
     f"Hybrid Sort (S={S_OPTIMAL}) | "
     f"Comparisons = {hybrid_comparisons:,} | "
-    f"CPU Time = {hybrid_cpu_time:.6f} seconds"
+    f"Average CPU Time = {hybrid_average_time:.6f} seconds"
 )
 
 
@@ -177,7 +191,7 @@ with open("d_results.csv", "w", newline="") as file:
         "Input Size",
         "S",
         "Key Comparisons",
-        "CPU Time"
+        "Average CPU Time"
     ])
 
     writer.writerow([
@@ -185,7 +199,7 @@ with open("d_results.csv", "w", newline="") as file:
         N,
         "N/A",
         merge_comparisons,
-        merge_cpu_time
+        merge_average_time
     ])
 
     writer.writerow([
@@ -193,7 +207,7 @@ with open("d_results.csv", "w", newline="") as file:
         N,
         S_OPTIMAL,
         hybrid_comparisons,
-        hybrid_cpu_time
+        hybrid_average_time
     ])
 
 

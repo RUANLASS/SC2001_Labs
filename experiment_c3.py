@@ -22,6 +22,8 @@ def generate_dataset(size, seed=42):
 # C-III EXPERIMENT
 # --------------------------------------------------
 
+REPEATS = 3
+
 S_VALUES = [
     1,
     5,
@@ -58,29 +60,39 @@ for n in INPUT_SIZES:
 
     for s in S_VALUES:
 
-        # Make a copy so every S receives
-        # exactly the same input
-        data = original_data.copy()
+        times = []
+        comparisons = None
 
-        start_time = time.process_time()
+        for run in range(REPEATS):
 
-        _, comparisons = hybrid_merge_insertion_sort(data, s)
+            data = original_data.copy()
 
-        end_time = time.process_time()
+            start_time = time.process_time()
 
-        cpu_time = end_time - start_time
+            _, current_comparisons = hybrid_merge_insertion_sort(data, s)
+
+            end_time = time.process_time()
+
+            cpu_time = end_time - start_time
+
+            times.append(cpu_time)
+
+            if comparisons is None:
+                comparisons = current_comparisons
+
+        average_cpu_time = sum(times) / REPEATS
 
         print(
             f"S = {s:2d} | "
             f"Comparisons = {comparisons:,} | "
-            f"CPU Time = {cpu_time:.4f} seconds"
+            f"Average CPU Time = {average_cpu_time:.4f} seconds"
         )
 
         results.append([
-            n, 
+            n,
             s,
             comparisons,
-            cpu_time
+            average_cpu_time
         ])
 
         
@@ -92,7 +104,7 @@ with open("c3_results.csv", "w", newline="") as file:
         "Input Size",
         "S",
         "Key Comparisons",
-        "CPU Time"
+        "Average CPU Time"
     ])
 
     writer.writerows(results)
