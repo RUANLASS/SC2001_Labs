@@ -45,3 +45,34 @@ time, not just in comparisons. So although comparisons alone never have an
 interior minimum, wall-clock time can, purely from implementation overhead —
 a distinction worth keeping in mind when choosing S in practice versus when
 proving asymptotic bounds.
+
+## (c)(ii) rerun at n = 10,000,000 (matching part (d)'s input size)
+
+To keep every part of the analysis on the same input size, (c)(ii) was
+rerun with n fixed at 10,000,000 instead of 1,000,000, using the same S
+values as the team's (c)(iii) sweep (1, 5, 10, 15, 20, 25, 30, 40, 50)
+([results/c2_comparisons_vs_S_10M_run.csv](results/c2_comparisons_vs_S_10M_run.csv),
+plots in
+[plots/c2_comparisons_vs_S_10M.png](plots/c2_comparisons_vs_S_10M.png) and
+[plots/c2_time_vs_S_10M.png](plots/c2_time_vs_S_10M.png)).
+
+The comparisons-vs-S result is unchanged in shape: still monotonically
+increasing with S, confirming the same O(n·S) vs O(n·log(n/S)) trade-off
+holds regardless of n.
+
+The CPU-time result is where it gets interesting. On this run, the fastest
+S was 30 (25.21s), with S = 10, 15, and 30 all clustered within about 0.6s
+of each other (25.2s–25.8s) — meaningfully flatter than a single sharp
+minimum. That's a different "optimal S" than earlier independent checks by
+other team members at the same n (S = 5 and S = 10 were both found fastest
+on different machines). The most likely explanation is a combination of
+run-to-run timing noise and genuine cross-machine differences — the
+absolute CPU times measured here (25–29s) were roughly half of what was
+measured on another team member's machine for the identical (n, S)
+configuration, which points to hardware differences rather than a bug.
+
+The honest conclusion: at n = 10,000,000, S in roughly the 5–30 range all
+perform near-optimally in CPU time, and pinning down one single "best" S
+more precisely than that would require averaging multiple runs on the same
+machine — raw comparison count, by contrast, is deterministic and doesn't
+have this problem.
