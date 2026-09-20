@@ -22,7 +22,7 @@ from generate_data import generate_dataset
 # --------------------------------------------------
 
 N = 10_000_000
-S_OPTIMAL = 10
+S_OPTIMAL = 5
 SEED = 42
 
 

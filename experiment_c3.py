@@ -62,11 +62,11 @@ for n in INPUT_SIZES:
         # exactly the same input
         data = original_data.copy()
 
-        start_time = time.perf_counter()
+        start_time = time.process_time()
 
         _, comparisons = hybrid_merge_insertion_sort(data, s)
 
-        end_time = time.perf_counter()
+        end_time = time.process_time()
 
         cpu_time = end_time - start_time
 
