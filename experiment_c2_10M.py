@@ -28,7 +28,7 @@ def main():
     w = csv.writer(f)
     if new_file:
         w.writerow(["n", "S", "comparisons", "cpu_time_s"])
-    arr = generate_dataset(N_FIXED, seed=2024)
+    arr = generate_dataset(N_FIXED, seed=42)
     for s in s_values:
         c, t = timed_hybrid(arr, s)
         w.writerow([N_FIXED, s, c, f"{t:.6f}"])

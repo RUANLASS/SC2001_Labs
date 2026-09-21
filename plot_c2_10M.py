@@ -33,7 +33,7 @@ best_s, best_t = s_values[best_idx], times[best_idx]
 fig, ax = plt.subplots(figsize=(7, 5))
 ax.plot(s_values, times, marker="o", color="#2563eb")
 ax.scatter([best_s], [best_t], color="#dc2626", zorder=5, s=80,
-           label=f"Fastest: S={best_s} ({best_t:.4f}s)")
+           label=f"Fastest: S={best_s}")
 ax.set_xscale("log")
 ax.set_xlabel("Threshold S (log scale)")
 ax.set_ylabel("CPU time (s)")
