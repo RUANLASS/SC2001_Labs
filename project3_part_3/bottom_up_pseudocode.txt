@@ -1,0 +1,19 @@
+Algorithm BottomUpKnapsack(C, n, w, p):
+
+    Create array DP[0...C]
+    DP[0] <- 0
+
+    For c <- 1 to C:
+
+        DP[c] <- 0
+
+        For i <- 0 to n-1:
+
+            If w[i] <= c:
+
+                candidate <- p[i] + DP[c - w[i]]
+
+                If candidate > DP[c]:
+                    DP[c] <- candidate
+
+    Return DP[C]
