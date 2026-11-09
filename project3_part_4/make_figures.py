@@ -18,6 +18,7 @@ DATA_JSON = os.path.join(HERE, "slide_data.json")
 ITEM_COLOURS = ["#2a78d6", "#eb6834", "#2f9e58"]
 NO_ITEM_COLOUR = "#c9c8c2"
 SURFACE = "#fcfcfb"
+
 TEXT_PRIMARY = "#0b0b0b"
 TEXT_SECONDARY = "#52514e"
 GRID = "#e4e3df"
