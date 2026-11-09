@@ -1,0 +1,144 @@
+{
+  "a": {
+    "C": 16,
+    "weights": [
+      4,
+      5,
+      8
+    ],
+    "profits": [
+      7,
+      6,
+      9
+    ],
+    "dp": [
+      0,
+      0,
+      0,
+      0,
+      7,
+      7,
+      7,
+      7,
+      14,
+      14,
+      14,
+      14,
+      21,
+      21,
+      21,
+      21,
+      28
+    ],
+    "choice": [
+      -1,
+      -1,
+      -1,
+      -1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "item_counts": [
+      4,
+      0,
+      0
+    ],
+    "total_weight": 16,
+    "total_profit": 28,
+    "final_candidates": [
+      {
+        "item": 0,
+        "fits": true,
+        "candidate": 28
+      },
+      {
+        "item": 1,
+        "fits": true,
+        "candidate": 20
+      },
+      {
+        "item": 2,
+        "fits": true,
+        "candidate": 23
+      }
+    ]
+  },
+  "b": {
+    "C": 12,
+    "weights": [
+      5,
+      6,
+      7
+    ],
+    "profits": [
+      7,
+      6,
+      9
+    ],
+    "dp": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      7,
+      7,
+      9,
+      9,
+      9,
+      14,
+      14,
+      16
+    ],
+    "choice": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      0,
+      0,
+      2,
+      2,
+      2,
+      0,
+      0,
+      0
+    ],
+    "item_counts": [
+      1,
+      0,
+      1
+    ],
+    "total_weight": 12,
+    "total_profit": 16,
+    "final_candidates": [
+      {
+        "item": 0,
+        "fits": true,
+        "candidate": 16
+      },
+      {
+        "item": 1,
+        "fits": true,
+        "candidate": 13
+      },
+      {
+        "item": 2,
+        "fits": true,
+        "candidate": 16
+      }
+    ]
+  }
+}
